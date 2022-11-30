@@ -1,0 +1,44 @@
+{% extends '/Users/andy/PycharmProjects/rateMyProfessor/templates/main.html' %}
+
+{% block content %}
+
+<h1> Login </h1>
+
+<form action="{% url 'login' %}" method="POST">
+    {% csrf_token %}
+    <!-- Email input -->
+    {{ form.as_div }}
+  
+      <div class="col">
+        <!-- Simple link -->
+        <a href="#!">Forgot password?</a>
+      </div>
+
+  
+    <!-- Submit button -->
+    <input class="" type="submit">Sign in</input>
+
+  
+    <!-- Register buttons -->
+    <div class="text-center">
+      <p>Not a member? <a href="#!">Register</a></p>
+      <p>or sign up with:</p>
+      <button type="button" class="btn btn-link btn-floating mx-1">
+        <i class="fab fa-facebook-f"></i>
+      </button>
+  
+      <button type="button" class="btn btn-link btn-floating mx-1">
+        <i class="fab fa-google"></i>
+      </button>
+  
+      <button type="button" class="btn btn-link btn-floating mx-1">
+        <i class="fab fa-twitter"></i>
+      </button>
+  
+      <button type="button" class="btn btn-link btn-floating mx-1">
+        <i class="fab fa-github"></i>
+      </button>
+    </div>
+  </form>
+
+{% endblock content %}

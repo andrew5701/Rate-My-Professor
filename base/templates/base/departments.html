@@ -1,0 +1,9 @@
+{% extends '/Users/andy/PycharmProjects/rateMyProfessor/templates/main.html' %}
+
+{% block content %}
+
+    {% for subject in subjects %}
+        <p><a href="{% url 'departmentpr' subject.id %}">{{ subject.subject }}</a></p>
+    {% endfor %}
+
+{% endblock %}

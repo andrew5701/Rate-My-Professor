@@ -1,0 +1,123 @@
+{% extends '/Users/andy/PycharmProjects/rateMyProfessor/templates/main.html' %}
+{% block content %}
+
+    <div class="lead text-center mt-3">
+        <h1 class="text-primary">
+            {{ professor.name }}
+        </h1>
+        <img src="{{ professor.picture }}" alt="Picture of Professor">
+        <br>
+        {{ professor.rating }} <i class="fa-solid fa-star" style="color:#fbec5d"></i>
+        <p>Department: {{ professor.department }}</p>
+
+    </div>
+
+
+
+    <h3 style="display: inline-block"><strong>Reviews:</strong></h3>
+
+    {% if user.is_authenticated %}
+
+
+        <div style="margin-left: 80%; display: inline-block" class="mb-2"><a href="{% url 'addreview' professor.id user.id %}"
+                                                                             class="btn btn-outline-primary"
+                                                                             type="button" id="off">Write a review</a>
+        </div>
+
+
+    {% endif %}
+
+
+
+
+
+    {% for review in reviews %}
+
+        {% if professor.id == review.professor.id %}
+            <div class="row shadow rounded mb-3 pt-3 mx-1" style="">
+
+                <div class="col-sm-8 col-12">
+
+                    <h4>{{ review.heading }}</h4>
+
+
+                </div>
+
+
+                <div style="color:#fbec5d; display: inline">
+                    {% if review.rating == 1 %}
+                        <i class="fa-solid fa-star"></i>
+                    {% elif review.rating == 2 %}
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    {% elif review.rating == 3 %}
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    {% elif review.rating == 4 %}
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    {% elif review.rating == 5 %}
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    {% endif %}
+                </div>
+
+                <p>User: {{ review.user.username }}</p>
+                <p>Course taken: {{ review.courses }}</p>
+                <p>{{ review.review }}</p>
+                <br>
+                <p>Created at: {{ review.time }}</p>
+                <br>
+                {% if review.user.id == user.id %}
+                    <script>
+                        let i = document.getElementById('off');
+                        i.style.display = 'none';
+                        let bool = true;
+                    </script>
+                    <div class="text-end mb-3" style="">
+
+                        <a class="btn btn-outline-primary" href="{% url 'update' review.id professor.id %}"
+                           type="button"><i
+                                class="fa-regular fa-pen-to-square"></i></a>
+
+
+                        <form action="{% url 'delete' review.id %}" method="POST" style="display:inline-block">
+                            {% csrf_token %}
+                            <button class="btn btn-outline-danger" style="display:inline-block" type="submit"><i
+                                    class="fa-solid fa-x"></i></button>
+                        </form>
+                    </div>
+                {% else %}
+                    <script>
+                    if(bool){
+
+                    }
+                    else {
+                        let i = document.getElementById('off');
+                        i.style.display = 'block';
+                    }
+                    </script>
+                {% endif %}
+
+
+            </div>
+            </div>
+
+
+
+        {% endif %}
+
+
+    {% endfor %}
+
+
+
+
+{% endblock content %}
+

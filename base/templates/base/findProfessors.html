@@ -1,0 +1,37 @@
+{% extends '/Users/andy/PycharmProjects/rateMyProfessor/templates/main.html' %}
+
+{% block content %}
+    {% if search_item != "" %}
+    <h1> Results for "{{ search_item }}" </h1>
+    {% else %}
+    <h1> All Professors </h1>
+    {% endif %}
+
+
+
+    {% for professor in professors %}
+        <div class="row shadow rounded mb-3 pt-3 mx-1" style="">
+            <div class="col-sm-8 col-12">
+                <h5><strong><a href="{% url 'professorview' professor.id %}">{{ professor.name }}</a> {{ professor.rating }}<i class="fa-solid fa-star" style="color:#fbec5d"></i></strong></h5>
+                <h4>{{ professor.department }}</h4>
+
+
+            </div>
+
+        </div>
+
+
+
+
+
+    {% empty %}
+        <div class="row">
+            <div class="col-12 mb-3">
+                <h3>No professors were found</h3>
+            </div>
+        </div>
+    {% endfor %}
+
+
+
+{% endblock content %}
