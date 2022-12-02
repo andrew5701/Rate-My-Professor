@@ -71,14 +71,14 @@ def logout_view(request):
 
 def search(request):
     search_term = request.GET.get('searchbar' or '')
-    professors = Professor.objects.all().filter(name__contains=search_term)
+    professors = Professor.objects.all().filter(name__contains=search_term).order_by('name')
     context = {'professors': professors, 'search_item': search_term}
     return render(request, 'base/findProfessors.html', context)
 
 
 def professor_view(request, professor_id):
     professor = Professor.objects.get(id=professor_id)
-    reviews = Review.objects.all()
+    reviews = Review.objects.all().filter(professor_id=professor.id)
 
     context = {'professor': professor, 'reviews': reviews}
 
@@ -179,7 +179,7 @@ def delete(request, review_id):
 
 
 def all_professors(request):
-    professors = Professor.objects.all()
+    professors = Professor.objects.all().order_by('name')
     context = {'professors': professors}
     return render(request, 'base/allProfessors.html', context)
 
@@ -199,7 +199,7 @@ def departments(request):
 def department_professors(request, department_id):
     department = Subject.objects.get(id=department_id)
     professors = []
-    teachers = Professor.objects.all()
+    teachers = Professor.objects.all().order_by('name')
     for t in teachers:
         if department.subject in t.department:
             professors.append(t)

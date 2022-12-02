@@ -29,7 +29,7 @@
                             {% csrf_token %}
                             {{ form.as_div }}
 
-                            <select name="courses" id="" style="width:100%; height:130%" required multiple>
+                            <select name="courses" id="" style="width:100%; height:130%" required>
                             {% for c in courses %}
 
                                     <option value="{{ c.course }}">{{ c.course }}</option>

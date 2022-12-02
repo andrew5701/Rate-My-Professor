@@ -7,7 +7,40 @@
         </h1>
         <img src="{{ professor.picture }}" alt="Picture of Professor">
         <br>
-        {{ professor.rating }} <i class="fa-solid fa-star" style="color:#fbec5d"></i>
+        <div sytle="margin-left:10%">{{ professor.rating }}</div>
+           <div style="color:#fbec5d; display: inline">
+            {% if professor.rating < 2 %}
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star" style="color:black"></i>
+                <i class="fa-solid fa-star" style="color:black"></i>
+                <i class="fa-solid fa-star" style="color:black"></i>
+                <i class="fa-solid fa-star" style="color:black"></i>
+            {% elif professor.rating < 3 %}
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star" style="color:black"></i>
+                <i class="fa-solid fa-star" style="color:black"></i>
+                <i class="fa-solid fa-star" style="color:black"></i>
+            {% elif professor.rating < 4 %}
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star" style="color:black"></i>
+                <i class="fa-solid fa-star" style="color:black"></i>
+            {% elif professor.rating < 5 %}
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star" style="color:black"></i>
+            {% elif professor.rating == 5 %}
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+            {% endif %}
+        </div>
         <p>Department: {{ professor.department }}</p>
 
     </div>
@@ -19,9 +52,10 @@
     {% if user.is_authenticated %}
 
 
-        <div style="margin-left: 80%; display: inline-block" class="mb-2"><a href="{% url 'addreview' professor.id user.id %}"
-                                                                             class="btn btn-outline-primary"
-                                                                             type="button" id="off">Write a review</a>
+        <div style="margin-left: 80%; display: inline-block" class="mb-2"><a
+                href="{% url 'addreview' professor.id user.id %}"
+                class="btn btn-outline-primary"
+                type="button" id="off">Write a review</a>
         </div>
 
 
@@ -33,7 +67,7 @@
 
     {% for review in reviews %}
 
-        {% if professor.id == review.professor.id %}
+
             <div class="row shadow rounded mb-3 pt-3 mx-1" style="">
 
                 <div class="col-sm-8 col-12">
@@ -47,18 +81,28 @@
                 <div style="color:#fbec5d; display: inline">
                     {% if review.rating == 1 %}
                         <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
                     {% elif review.rating == 2 %}
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
                     {% elif review.rating == 3 %}
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
                     {% elif review.rating == 4 %}
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
                     {% elif review.rating == 5 %}
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star"></i>
@@ -72,7 +116,10 @@
                 <p>Course taken: {{ review.courses }}</p>
                 <p>{{ review.review }}</p>
                 <br>
-                <p>Created at: {{ review.time }}</p>
+                <p>Posted at: {{ review.time }}</p>
+                {% if review.update_time|date:"U" > review.time|date:"U" %}
+                    <p>Edited at: {{ review.update_time }}</p>
+                {% endif %}
                 <br>
                 {% if review.user.id == user.id %}
                     <script>
@@ -95,13 +142,12 @@
                     </div>
                 {% else %}
                     <script>
-                    if(bool){
+                        if (bool) {
 
-                    }
-                    else {
-                        let i = document.getElementById('off');
-                        i.style.display = 'block';
-                    }
+                        } else {
+                            let i = document.getElementById('off');
+                            i.style.display = 'block';
+                        }
                     </script>
                 {% endif %}
 
@@ -111,7 +157,8 @@
 
 
 
-        {% endif %}
+        {% empty %}
+            <h4>No reviews have been posted for {{ professor.name }} yet.</h4>
 
 
     {% endfor %}

@@ -28,6 +28,7 @@ class Review(models.Model):
     review = models.CharField(max_length=200)
     rating = models.FloatField(default=5.0)
     courses = models.CharField(max_length=800, null=True)
+    # courses = models.ForeignKey(Courses, on_delete=models.CASCADE, null=True)
     time = models.DateTimeField(auto_now_add=True, null=True)
     update_time = models.DateTimeField(auto_now=True)
     review_check = models.BooleanField(null=True)

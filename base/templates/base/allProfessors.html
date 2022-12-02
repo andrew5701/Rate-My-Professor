@@ -7,7 +7,39 @@
     {% for professor in professors %}
         <div class="row shadow rounded mb-3 pt-3 mx-1" style="">
             <div class="col-sm-8 col-12">
-                <h5><strong><a href="{% url 'professorview' professor.id %}">{{ professor.name }}</a> {{ professor.rating }}<i class="fa-solid fa-star" style="color:#fbec5d"></i></strong></h5>
+                <h5><strong><a href="{% url 'professorview' professor.id %}">{{ professor.name }}</a> {{ professor.rating }}<div style="color:#fbec5d; display: inline">
+                    {% if professor.rating < 2 %}
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                    {% elif professor.rating < 3 %}
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                    {% elif professor.rating < 4 %}
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                    {% elif professor.rating < 5 %}
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                    {% elif professor.rating == 5 %}
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    {% endif %}
+                </div></strong></h5>
                 <h4>{{ professor.department }}</h4>
 
             </div>
